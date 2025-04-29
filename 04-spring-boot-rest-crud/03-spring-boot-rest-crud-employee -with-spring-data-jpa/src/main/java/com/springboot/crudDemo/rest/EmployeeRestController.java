@@ -1,6 +1,5 @@
 package com.springboot.crudDemo.rest;
 
-import com.springboot.crudDemo.dao.EmployeeDAO;
 import com.springboot.crudDemo.entity.Employee;
 import com.springboot.crudDemo.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
