@@ -1,6 +1,6 @@
 Here is the content formatted in proper `README.md` Markdown style:
 
-```markdown
+
 # 📘 Spring Boot REST API – Beginner to Advanced Guide (with CRUD Example)
 
 ## 🎯 Objective
@@ -21,8 +21,8 @@ This guide walks you through building a **Spring Boot REST API** for managing en
 ---
 
 ## 🧱 Architecture Diagram
-```
 
+```
 [Client / Postman]
 |
 v
@@ -155,6 +155,4 @@ spring.data.rest.base-path=/magic-api
 | 3     | Switched to Spring Data JPA              |
 | 4     | Zero-code API with Spring Data REST      |
 
-```
 
-```
