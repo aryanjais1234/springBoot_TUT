@@ -1,10 +1,14 @@
 package com.luv2code.springboot.cruddemo.security;
 
+import com.luv2code.springboot.cruddemo.service.UserService;
+import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
@@ -14,44 +18,20 @@ import javax.sql.DataSource;
 @Configuration
 public class DemoSecurityConfig {
 
-    // add support for JDBC ... no more hardcoded users :-)
-
-    /**
-     * Configures and provides a {@link UserDetailsManager} bean for handling user authentication and authorization
-     * with JDBC. Custom SQL queries are set to retrieve user details and roles from the database.
-     *
-     * @param dataSource the {@link DataSource} to connect to the database containing authentication and authorization data
-     * @return a configured instance of {@link JdbcUserDetailsManager} used for managing user details and roles
-     */
     @Bean
-    public UserDetailsManager userDetailsManager(DataSource dataSource){
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-        JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
-
-        // define query to retrieve a user by username
-        jdbcUserDetailsManager.setUsersByUsernameQuery(
-                "select user_id, pw, active from members where user_id=?"
-        );
-
-        // define query to retrieve the authorities/roles by username
-
-        jdbcUserDetailsManager.setAuthoritiesByUsernameQuery(
-                "select user_id, role from roles where user_id=?"
-        );
-
-        return jdbcUserDetailsManager;
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider(UserService userService){
+        DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
+        auth.setUserDetailsService(userService);
+        auth.setPasswordEncoder(passwordEncoder());
+        return auth;
     }
 
 
-    /**
-     * Configures the security filter chain for HTTP security, defining access control rules
-     * for various HTTP methods and endpoints. It also sets up HTTP Basic authentication
-     * and disables CSRF protection.
-     *
-     * @param hhttp the {@link HttpSecurity} object used to configure security settings
-     * @return a {@link SecurityFilterChain} object built from the configured HTTP security settings
-     * @throws Exception if an error occurs while configuring the security filter chain
-     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity hhttp) throws Exception{
         hhttp.authorizeHttpRequests(configurer ->
