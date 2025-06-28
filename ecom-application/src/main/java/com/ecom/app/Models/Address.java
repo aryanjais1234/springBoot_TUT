@@ -3,6 +3,7 @@ package com.ecom.app.Models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
@@ -17,8 +18,5 @@ public class Address {
     private String state;
     private String country;
     private String zipcode;
-    @OneToOne(mappedBy = "address")
-    @JsonIgnore
-    private User user;
 }
 

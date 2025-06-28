@@ -71,11 +71,23 @@ public class CartService {
         return false;
     }
 
+    public List<CartItem> getCart(String userId){
+        return userRepository.findById(Long.valueOf(userId))
+                .map(cartItemRepository::findByUser)
+                .orElseGet(List::of);
+    }
+
     public List<CartItemDTO> getAllProducts(String userId) {
         return userRepository.findById(Long.valueOf(userId))
                 .map(user-> cartItemRepository.findByUser(user).stream()
                         .map(item -> new CartItemDTO(item.getId(),item.getUser().getFirstName(), item.getProduct().getName(),item.getQuantity(),item.getPrice()))
                         .collect(Collectors.toList()))
                 .orElseGet(List::of);
+    }
+
+    public void clearCart(String userId) {
+        userRepository.findById(Long.valueOf(userId))
+                .ifPresent(cartItemRepository::deleteByUser
+                );
     }
 }
