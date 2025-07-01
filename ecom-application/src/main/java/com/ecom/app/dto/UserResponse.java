@@ -1,8 +1,10 @@
 package com.ecom.app.dto;
 
 import com.ecom.app.Models.UserRole;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
+@AllArgsConstructor
 @Data
 public class UserResponse {
     private Long id;

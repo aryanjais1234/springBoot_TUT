@@ -1,7 +1,9 @@
 package com.ecom.app.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
+@AllArgsConstructor
 @Data
 public class ProductResponse {
     private Long id;

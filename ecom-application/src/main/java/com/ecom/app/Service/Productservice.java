@@ -36,17 +36,29 @@ public class Productservice {
     }
 
     private ProductResponse mapToProductResponse(Product savedProduct) {
-        ProductResponse response = new ProductResponse();
-        response.setId(savedProduct.getId());
-        response.setName(savedProduct.getName());
-        response.setPrice(savedProduct.getPrice());
-        response.setDescription(savedProduct.getDescription());
-        response.setImageUrl(savedProduct.getImageUrl());
-        response.setStockQuantity(savedProduct.getStockQuantity());
-        response.setCategory(savedProduct.getCategory());
-        response.setActive(savedProduct.getActive());
 
-        return response;
+        return new ProductResponse(
+                savedProduct.getId(),
+                savedProduct.getName(),
+                savedProduct.getDescription(),
+                savedProduct.getPrice(),
+                savedProduct.getStockQuantity(),
+                savedProduct.getCategory(),
+                savedProduct.getImageUrl(),
+                savedProduct.getActive()
+        );
+
+//        ProductResponse response = new ProductResponse();
+//        response.setId(savedProduct.getId());
+//        response.setName(savedProduct.getName());
+//        response.setPrice(savedProduct.getPrice());
+//        response.setDescription(savedProduct.getDescription());
+//        response.setImageUrl(savedProduct.getImageUrl());
+//        response.setStockQuantity(savedProduct.getStockQuantity());
+//        response.setCategory(savedProduct.getCategory());
+//        response.setActive(savedProduct.getActive());
+//
+//        return response;
     }
 
     private void updateProductFromRequest(Product product, ProductRequest productRequest) {
